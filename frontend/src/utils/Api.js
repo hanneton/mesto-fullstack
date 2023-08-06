@@ -111,7 +111,6 @@ class Api {
 //     "Content-type": "application/json"
 // });
 const api = new Api(`https://api.hanneton.nomoreparties.co`, {
-    authorization: token,
     "Content-type": "application/json",
 });
 
