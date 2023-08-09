@@ -12,19 +12,20 @@ function Card({ onCardClick, onCardLike, onCardDelete, card }) {
     function handleDelete() {
         onCardDelete(card);
     }
+
     return (
         <figure className="element">
             <img onClick={handleClick} src={card.link} alt={card.name} className="element__pic" />
             <figcaption className="element__caption">
                 <h2 className="element__name">{card.name}</h2>
                 <div className="element__like-container">
-                    <button onClick={handleLike} className={`element__like-button ${card.likes.some(({ _id }) => _id === userInfo._id) &&
+                    <button onClick={handleLike} className={`element__like-button ${card.likes.some((_id) => _id === userInfo._id) &&
                         "element__like-button_active"}`}
                         type="button" aria-label="кнопка лайк"></button>
                     <span className="element__like-counter">{card.likes.length}</span>
                 </div>
             </figcaption>
-            {card.owner._id === userInfo._id && <button className="element__trash-btn" onClick={handleDelete}></button>}
+            {card.owner === userInfo._id && <button className="element__trash-btn" onClick={handleDelete}></button>}
         </figure>
     )
 }

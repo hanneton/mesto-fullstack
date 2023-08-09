@@ -4,25 +4,24 @@ import { useLocation } from 'react-router-dom';
 
 function Header(props) {
     const currentLocation = useLocation();
-    console.log(props.email);
     return (
         <header className="header">
             <Link to="/" className="logo header__logo" />
             <div>
                 <Link to={`/${props.isLoggedIn
                     ? ''
-                    : `sign-${currentLocation.pathname === '/sign-up'
+                    : `sign${currentLocation.pathname === '/signup'
                         ? 'in'
                         : 'up'}`}`}
                     className="header__link"
                 >
                     {props.isLoggedIn
                         ? props.email
-                        : currentLocation.pathname === '/sign-up'
+                        : currentLocation.pathname === '/signup'
                             ? 'Войти'
                             : 'Регистрация'}
                 </Link>
-                {props.isLoggedIn && <Link to="/sign-in" onClick={props.signOut} className="header__link">Выйти</Link>}
+                {props.isLoggedIn && <Link to="/signin" onClick={props.signOut} className="header__link">Выйти</Link>}
             </div>
         </header>
     )

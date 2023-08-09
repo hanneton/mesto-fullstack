@@ -36,12 +36,11 @@ function App() {
   React.useEffect(() => {
     Promise.all([api.getInitialInfo(), api.getInitialCards()])
       .then(([info, cards]) => {
-        console.log(info, cards)
         setCurrentUser(info);
         setCards(cards);
       })
       .catch(err => console.log(err));
-  }, [])
+  }, [isLoggedIn])
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleEscClose);
@@ -53,7 +52,7 @@ function App() {
 
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     api.setLikeStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) => {
@@ -127,10 +126,10 @@ function App() {
   function handleAddPlaceSubmit(name, link) {
     api.addCard(name, link)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([...cards, newCard]);
         closeAllPopups();
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }
 
   function onSuccess() {
@@ -147,7 +146,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth.getPersonalData(jwt)
-        .then(({ data }) => {
+        .then((data) => {
           setEmail(data.email);
           setLoggedIn(true);
           navigate('/');
@@ -158,13 +157,13 @@ function App() {
 
   React.useEffect(() => {
     checkToken();
-  }, [])
+  }, [isLoggedIn])
 
   function handleSignUp(password, email) {
     auth.register(password, email)
       .then(() => {
         onSuccess();
-        navigate('/sign-in')
+        navigate('/signin')
       })
       .catch(err => {
         console.log(err);
@@ -209,11 +208,11 @@ function App() {
                 isLoggedIn={isLoggedIn}
               />} />
             <Route
-              path="/sign-up"
+              path="/signup"
               element={<Register onSignUp={handleSignUp} />}
             />
             <Route
-              path="/sign-in"
+              path="/signin"
               element={<Login onSignIn={handleSignIn} />}
             />
           </Routes>

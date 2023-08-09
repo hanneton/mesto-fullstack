@@ -110,8 +110,9 @@ class Api {
 //     authorization: token,
 //     "Content-type": "application/json"
 // });
-const api = new Api(`https://api.hanneton.nomoreparties.co`, {
+const api = new Api(`http://localhost:3000`, {
     "Content-type": "application/json",
+    "Authorization": `Bearer: ${localStorage.getItem('jwt')}`
 });
 
 export default api;

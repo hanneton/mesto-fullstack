@@ -5,7 +5,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 function Main(props) {
 
     const userInfo = React.useContext(CurrentUserContext);
-
     return (
         <main className="content">
             <section className="user-profile content__user-profile">
